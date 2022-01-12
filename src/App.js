@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef, useState } from 'react'
+import { Canvas, useFrame, useLoader } from '@react-three/fiber'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { Environment, OrbitControls } from "@react-three/drei";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
-function App() {
+import { Suspense } from 'react/cjs/react.production.min'
+import Model from './Models/Model';
+
+const Modela = () => {
+
+  const gltf = useLoader(DRACOLoader, './model.gltf')
+  // Return the view, these are regular Threejs elements expressed in JSX
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <primitive object={gltf.scene} scale={0.4} />
+    </>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <div className="App">
+      <Canvas style={{height: window.innerHeight}}>
+        <Suspense fallback={null}>
+          <Model/>
+          <OrbitControls />
+          <Environment preset="sunset" background />
+        </Suspense>
+      </Canvas>
+    </div>
+  )
+}
+
