@@ -11,6 +11,8 @@ import { useGLTF,
 export default function Model(props) {
   const group = useRef()
   const { nodes, materials } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/cybertruck/model.gltf')
+
+
   return (
     <group ref={group} {...props} dispose={null}>
 <mesh geometry={nodes.tires.geometry} material={materials['rubber.002']} />
