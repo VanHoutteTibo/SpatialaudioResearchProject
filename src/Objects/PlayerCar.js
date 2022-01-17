@@ -1,7 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react'
 import Model from '../Models/Model';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber'
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
+import * as THREE from 'three'
 import { Mesh } from 'three';
+import { once } from 'events';
+import { Box, PositionalAudio } from '@react-three/drei';
 
 //variable to keep track of witch directions are activated
 let forward, backward, left, right = false
@@ -10,16 +13,82 @@ let forward, backward, left, right = false
 let movmentZ = 0
 let movmentX = 0
 
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+
+let soundInitialized = 0
+
+const panner = new StereoPannerNode(audioCtx)
+
+// const track = audioContext.createMediaElementSource(audioElement);
+
+// track.connect(audioContext.destination)
+// track.loop = true
+// track.start()
+
+//var panner = audioContext.createPanner();
+
 function Car()
 {
     const [playerCarPosZ, setPlayerCarPosZ] = useState(0)
     const [playerCarPosX, setPlayerCarPosX] = useState(0)
  
- 
+  const initSound = (audioElement) => {
+    const track = audioCtx.createMediaElementSource(audioElement);
+
+    console.log(track)
+    //track.connect(panner.destination)
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+      audioElement.play();
+    }
+    track.connect(panner).connect(audioCtx.destination);
+    soundInitialized = true;
+  }
+
+  function Sound({ url }) {
+    const sound = useRef()
+    const { camera } = useThree()
+    const [listener] = useState(() => new THREE.AudioListener())
+    const buffer = useLoader(THREE.AudioLoader, url)
+
+    useEffect(() => {
+      if (soundInitialized < 2) {
+        sound.current.setBuffer(buffer)
+        sound.current.setRefDistance(1)
+        sound.current.setLoop(true)
+        sound.current.play()
+        console.log("test")
+        soundInitialized++
+      }
+      
+      listener.position.x = playerCarPosX
+      listener.position.z = playerCarPosZ
+      
+      camera.add(listener)
+      
+      return () => {
+        
+        camera.remove(listener)
+      }
+    }, [])
+    return <positionalAudio ref={sound} args={[listener]} />
+  }
   
   useEffect(() => {
+    
+    
+
     //check which key is pressed and set direction active
     const handleKeyDown = (e) => {
+      const audioElement = document.querySelector('audio');
+      console.log(audioElement)
+      if (soundInitialized == false) {
+        //initSound(audioElement)
+        
+      }
+     
+     
       console.log(e.code)
       if(e.code === "KeyW") forward = true;
       else if(e.code === "KeyS") backward = true
@@ -49,6 +118,10 @@ function Car()
     //updates every frame
     useFrame(() => {
         //check what directions are activated and move car
+        // console.log(panner.pan.value)
+        // panner.pan.value =
+        // panner.positionX = playerCarPosX
+        // panner.positionZ = playerCarPosZ
         if (forward === true) {
             movmentZ += 0.1
             setPlayerCarPosZ(movmentZ)
@@ -72,9 +145,18 @@ function Car()
                 setPlayerCarPosX(movmentX)
             }
         }
+        
       })
+
     return (
+      <>
+        <mesh position={[playerCarPosX,0,playerCarPosZ]}>
+        <Sound url="/carSound.mp3" />
+        </mesh>
+        
         <Model position={[playerCarPosX,0,playerCarPosZ]}/>
+        
+      </>
     )
 }
 
