@@ -13,36 +13,11 @@ import Car from './Objects/PlayerCar';
 
 function App() {
 
-//   const [playerCarPosZ, setPlayerCarPosZ] = useState(0)
-
-//   function timeout(delay) {
-//     return new Promise( res => setTimeout(res, delay) );
-// }
-//   let keypressed = false
-
-//   const onKeyPress = ({key}) => {
-//     console.log(key)
-//     setTimeout(function() {
-//       if(key == "w" && keypressed == false)
-//       {
-//         console.log(playerCarPosZ)
-//         setPlayerCarPosZ(playerCarPosZ + 0.1)
-//       }
-//       keypressed = true  
-//       }, 1);
-//   }
-//   document.addEventListener('keypress', onKeyPress);
-  
-
-  
-
-  // useFrame(() => {
-  //   console.log("Hey, I'm executing every frame!")
-  // })
 
 
   return (
     <>
+    <audio src="/carSound.mp3" crossOrigin="anonymous" ></audio>
     <div className="App">
       <Canvas style={{height: window.innerHeight}}>
         <Suspense fallback={null}>
