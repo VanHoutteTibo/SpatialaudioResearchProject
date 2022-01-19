@@ -10,22 +10,26 @@ import { useGLTF,
 
 export default function Model(props) {
   const group = useRef()
-  const { nodes, materials } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/cybertruck/model.gltf')
-
-
+  const { nodes, materials } = useGLTF('https://market-assets.fra1.cdn.digitaloceanspaces.com/market-assets/models/hatchback/model.gltf')
   return (
     <group ref={group} {...props} dispose={null}>
-<mesh geometry={nodes.tires.geometry} material={materials['rubber.002']} />
-<mesh geometry={nodes.steer.geometry} material={nodes.steer.material} />
-<mesh geometry={nodes.interior003.geometry} material={nodes.interior003.material} />
-<mesh geometry={nodes.interior003_1.geometry} material={materials['light_f.002']} />
-<mesh geometry={nodes.interior003_2.geometry} material={materials['body.002']} />
-<mesh geometry={nodes.interior003_3.geometry} material={materials.glass_crack} />
-<mesh geometry={nodes.interior003_4.geometry} material={materials['glassgray.002']} />
-<mesh geometry={nodes.interior003_5.geometry} material={materials.Light} />
+<mesh geometry={nodes.Mesh_wheel_frontLeft032.geometry} material={nodes.Mesh_wheel_frontLeft032.material} />
+<mesh geometry={nodes.Mesh_wheel_frontLeft032_1.geometry} material={nodes.Mesh_wheel_frontLeft032_1.material} />
+<mesh geometry={nodes.Mesh_body013.geometry} material={materials['plastic.001']} />
+<mesh geometry={nodes.Mesh_body013_1.geometry} material={materials['paintGreen.001']} />
+<mesh geometry={nodes.Mesh_body013_2.geometry} material={materials['lightFront.001']} />
+<mesh geometry={nodes.Mesh_body013_3.geometry} material={materials['_defaultMat.001']} />
+<mesh geometry={nodes.Mesh_body013_4.geometry} material={materials['window.001']} />
+<mesh geometry={nodes.Mesh_body013_5.geometry} material={materials['lightBack.001']} />
+<mesh geometry={nodes.Mesh_wheel_frontLeft031.geometry} material={nodes.Mesh_wheel_frontLeft031.material} />
+<mesh geometry={nodes.Mesh_wheel_frontLeft031_1.geometry} material={nodes.Mesh_wheel_frontLeft031_1.material} />
+<mesh geometry={nodes.Mesh_wheel_frontLeft010.geometry} material={nodes.Mesh_wheel_frontLeft010.material} />
+<mesh geometry={nodes.Mesh_wheel_frontLeft010_1.geometry} material={nodes.Mesh_wheel_frontLeft010_1.material} />
+<mesh geometry={nodes.Mesh_wheel_frontLeft009.geometry} material={nodes.Mesh_wheel_frontLeft009.material} />
+<mesh geometry={nodes.Mesh_wheel_frontLeft009_1.geometry} material={nodes.Mesh_wheel_frontLeft009_1.material} />
 
     </group>
   )
 }
 
-useGLTF.preload('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/cybertruck/model.gltf')
+useGLTF.preload('https://market-assets.fra1.cdn.digitaloceanspaces.com/market-assets/models/hatchback/model.gltf')

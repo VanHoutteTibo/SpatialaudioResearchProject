@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import Model from '../Models/Model';
+import Model from '../Models/NpcCar.js';
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Mesh } from 'three';
@@ -10,7 +10,7 @@ import { Box, PositionalAudio } from '@react-three/drei';
 let forward, backward, left, right = false
 
 //variables that hold the current x and z position of the car
-let movmentZ = 0
+let movementStarted = false
 let movmentX = 0
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -28,19 +28,15 @@ const panner = new StereoPannerNode(audioCtx)
 
 //var panner = audioContext.createPanner();
 
-const myInitObject = {}
-
-
-function Car()
+function NpcCar()
 {
-  let started = false
     const [playerCarPosZ, setPlayerCarPosZ] = useState(0)
     const [playerCarPosX, setPlayerCarPosX] = useState(0)
  
   const initSound = (audioElement) => {
     const track = audioCtx.createMediaElementSource(audioElement);
 
-  
+    console.log(track)
     //track.connect(panner.destination)
     if (audioCtx.state === 'suspended') {
       audioCtx.resume();
@@ -61,15 +57,15 @@ function Car()
         sound.current.setBuffer(buffer)
         sound.current.setRefDistance(1)
         sound.current.setLoop(true)
-        //sound.current.play()
-        console.log("test")
+        sound.current.play()
+        console.log("testNPC")
         soundInitialized++
       }
       
-      //listener.position.x = playerCarPosX
-      //listener.position.z = playerCarPosZ
-      camera.position.set(playerCarPosX,3,playerCarPosZ-5)
-      //camera.add(listener)
+      listener.position.x = playerCarPosX
+      listener.position.z = playerCarPosZ
+      
+      camera.add(listener)
       
       return () => {
         
@@ -85,20 +81,8 @@ function Car()
 
     //check which key is pressed and set direction active
     const handleKeyDown = (e) => {
-      const audioElement = document.querySelector('audio');
-      console.log(audioElement)
-      if (soundInitialized == false) {
-        //initSound(audioElement)
-        
-      }
-     
-     
+     movementStarted = true
       
-      if(e.code === "KeyW") forward = true;
-      else if(e.code === "KeyS") backward = true
-
-      if(e.code === "KeyD") right = true;
-      else if(e.code === "KeyA") left = true
     }
     const handleKeyUp = (e) => {
         if(e.code === "KeyW") forward = false;
@@ -112,8 +96,8 @@ function Car()
 
     
     return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-      document.removeEventListener('keyup', handleKeyUp)
+        document.removeEventListener('keydown', handleKeyDown)
+        document.removeEventListener('keyup', handleKeyUp)
     }
     
 
@@ -126,29 +110,10 @@ function Car()
         // panner.pan.value =
         // panner.positionX = playerCarPosX
         // panner.positionZ = playerCarPosZ
-        if (forward === true) {
-            movmentZ += 0.1
-            setPlayerCarPosZ(movmentZ)
+        if (movementStarted) {
+            setPlayerCarPosZ(playerCarPosZ + 0.01)
         }
-        else if(backward === true)
-        {
-            movmentZ -= 0.1
-            setPlayerCarPosZ(movmentZ)
-        }
-
-        if (forward === true || backward === true) {
-            
-            if(right === true)
-            {
-                movmentX -= 0.05
-                setPlayerCarPosX(movmentX)
-            } 
-            else if(left === true)
-            {
-                movmentX += 0.05
-                setPlayerCarPosX(movmentX)
-            }
-        }
+      
 
        
         
@@ -166,4 +131,4 @@ function Car()
     )
 }
 
-export default Car;
+export default NpcCar;
