@@ -6,6 +6,8 @@ import { Mesh } from 'three';
 import { once } from 'events';
 import { Box, PositionalAudio } from '@react-three/drei';
 
+
+
 //variable to keep track of witch directions are activated
 let forward, backward, left, right = false
 
@@ -86,11 +88,13 @@ function Car()
     //check which key is pressed and set direction active
     const handleKeyDown = (e) => {
       const audioElement = document.querySelector('audio');
-      console.log(audioElement)
+      console.log(e.code)
       if (soundInitialized == false) {
         //initSound(audioElement)
         
       }
+      
+       
      
      
       
@@ -106,6 +110,8 @@ function Car()
 
         if(e.code === "KeyD") right = false;
         else if(e.code === "KeyA") left = false
+
+        
     }
     document.addEventListener('keydown', handleKeyDown)
     document.addEventListener('keyup', handleKeyUp)
@@ -149,7 +155,8 @@ function Car()
                 setPlayerCarPosX(movmentX)
             }
         }
-
+        localStorage.setItem('playerPosX', movmentX);
+        localStorage.setItem('playerPosZ', movmentZ);
        
         
       })

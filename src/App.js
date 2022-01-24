@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { Environment, OrbitControls, Sky } from "@react-three/drei";
+import { Box, Environment, Html, OrbitControls, Sky } from "@react-three/drei";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 import { Suspense } from 'react/cjs/react.production.min'
@@ -15,6 +15,11 @@ import NpcCar from './Objects/NpcCarObject';
 function App() {
 
   const deg2rad = degrees => degrees * (Math.PI / 180);
+
+  function answer()
+  {
+    console.log("clicked")
+  }
   
   function GroundPlane() {
     
@@ -30,11 +35,21 @@ function App() {
     <>
     <audio src="/carSound.mp3" crossOrigin="anonymous" ></audio>
     <div className="App">
+      
       <Canvas camera={{ position: [0,0,1], rotation: [deg2rad(10),deg2rad(180),0]}} style={{height: window.innerHeight}}>
+        <Html distanceFactor={20}>
+        <div className='absolute p-10 bg-red-500'>
+          <button onClick={answer}>Yo</button>
+        </div>
+        
+        </Html>
         <Suspense fallback={null}>
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
-          <NpcCar/>
+          <Box position={[-15,3,30]} args={[20,100, 20]}>
+            <meshStandardMaterial color='grey' />
+          </Box>
+          <NpcCar position={[0,0,5]}/>
           <Car />
           {/* <OrbitControls /> */}
           <Sky  distance={450000} sunPosition={[5, 1, 8]}  azimuth={0.25}/>

@@ -9,6 +9,8 @@ import { Box, PositionalAudio } from '@react-three/drei';
 //variable to keep track of witch directions are activated
 let forward, backward, left, right = false
 
+let playingSound;
+
 //variables that hold the current x and z position of the car
 let movementStarted = false
 let movmentX = 0
@@ -30,8 +32,12 @@ const panner = new StereoPannerNode(audioCtx)
 
 function NpcCar()
 {
-    const [playerCarPosZ, setPlayerCarPosZ] = useState(0)
-    const [playerCarPosX, setPlayerCarPosX] = useState(0)
+     const [playerCarPosZ, setPlayerCarPosZ] = useState(50)
+     const [playerCarPosX, setPlayerCarPosX] = useState(-30)
+
+    
+
+    const deg2rad = degrees => degrees * (Math.PI / 180);
  
   const initSound = (audioElement) => {
     const track = audioCtx.createMediaElementSource(audioElement);
@@ -46,6 +52,12 @@ function NpcCar()
     soundInitialized = true;
   }
 
+  const calcDistance = () => {
+    let npcPos = new THREE.Vector3(playerCarPosX, 0, playerCarPosZ)
+    let playerPos = new THREE.Vector3(localStorage.getItem('playerPosX'), 0, localStorage.getItem('playerPosZ'))
+    return playerPos.distanceTo(npcPos)
+  }
+
   function Sound({ url }) {
     const sound = useRef()
     const { camera } = useThree()
@@ -55,12 +67,17 @@ function NpcCar()
     useEffect(() => {
       if (soundInitialized < 2) {
         sound.current.setBuffer(buffer)
-        sound.current.setRefDistance(1)
+        sound.current.setRefDistance(2)
+        
         sound.current.setLoop(true)
         sound.current.play()
         console.log("testNPC")
+        if(soundInitialized == 1) playingSound = sound.current
         soundInitialized++
       }
+      
+      console.log(1/Math.pow(calcDistance()/100,2))
+      if(soundInitialized > 1)playingSound.setVolume(1/Math.pow(calcDistance()/100,2))
       
       listener.position.x = playerCarPosX
       listener.position.z = playerCarPosZ
@@ -111,7 +128,7 @@ function NpcCar()
         // panner.positionX = playerCarPosX
         // panner.positionZ = playerCarPosZ
         if (movementStarted) {
-            setPlayerCarPosZ(playerCarPosZ + 0.01)
+            setPlayerCarPosX(playerCarPosX + 0.1)
         }
       
 
@@ -122,10 +139,10 @@ function NpcCar()
     return (
       <>
         <mesh position={[playerCarPosX,0,playerCarPosZ]}>
-        <Sound url="/carSound.mp3" />
+        <Sound url="/siren.wav" />
         </mesh>
         
-        <Model position={[playerCarPosX,0,playerCarPosZ]}/>
+        <Model position={[playerCarPosX,0,playerCarPosZ]} rotation={[0,deg2rad(90),0]}/>
         
       </>
     )

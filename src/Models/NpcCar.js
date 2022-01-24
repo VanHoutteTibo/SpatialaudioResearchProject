@@ -16,7 +16,7 @@ export default function Model(props) {
 <mesh geometry={nodes.Mesh_door.geometry} material={materials['carTire.023']} />
 <mesh geometry={nodes.Mesh_door_1.geometry} material={materials['_defaultMat.034']} />
 <mesh geometry={nodes.Mesh_body009.geometry} material={materials['lightBack.016']} />
-<mesh geometry={nodes.Mesh_body009_1.geometry} material={materials['paintGreen.007']} />
+<mesh geometry={nodes.Mesh_body009_1.geometry} material={materials['paintRed.005']} />
 <mesh geometry={nodes.Mesh_body009_2.geometry} material={materials['plastic.026']} />
 <mesh geometry={nodes.Mesh_body009_3.geometry} material={materials['paintWhite.005']} />
 <mesh geometry={nodes.Mesh_body009_4.geometry} material={materials['_defaultMat.033']} />
