@@ -154,7 +154,7 @@ function Car()
         localStorage.setItem('playerPosZ', movmentZ);
        
         
-        console.log(clock.getElapsedTime())
+        
         
         
       })

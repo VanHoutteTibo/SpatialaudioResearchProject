@@ -22,6 +22,9 @@ let soundInitialized = 0
 
 const panner = new StereoPannerNode(audioCtx)
 
+//direction: 0->FW, 1->BW, 2->LFT, 3->RGHT
+let direction = 0
+
 // const track = audioContext.createMediaElementSource(audioElement);
 
 // track.connect(audioContext.destination)
@@ -76,7 +79,7 @@ function NpcCar()
         soundInitialized++
       }
       
-      console.log(1/Math.pow(calcDistance()/100,2))
+      //console.log(1/Math.pow(calcDistance()/100,2))
       if(soundInitialized > 1)playingSound.setVolume(1/Math.pow(calcDistance()/100,2))
       
       listener.position.x = playerCarPosX
@@ -127,8 +130,50 @@ function NpcCar()
         // panner.pan.value =
         // panner.positionX = playerCarPosX
         // panner.positionZ = playerCarPosZ
+      
+
+        if (localStorage.getItem('reset') == "true"){
+          localStorage.setItem('reset', false)
+          direction = Math.floor(Math.random() * 4);
+          soundInitialized = 0
+          switch(direction)
+          {
+            case 0:
+              setPlayerCarPosX(0)
+              setPlayerCarPosZ(50)
+              break;
+            case 1:
+              setPlayerCarPosX(0)
+              setPlayerCarPosZ(-50)
+              break;
+            case 2:
+              setPlayerCarPosX(30)
+              setPlayerCarPosZ(50)
+              break;
+            case 3:
+              setPlayerCarPosX(-30)
+              setPlayerCarPosZ(50)
+              break;
+          }
+        }
+       
         if (movementStarted) {
-            setPlayerCarPosX(playerCarPosX + 0.1)
+          switch(direction)
+          {
+            case 0:
+              setPlayerCarPosZ(playerCarPosZ - 0.1)
+              break;
+            case 1:
+              setPlayerCarPosZ(playerCarPosZ + 0.1)
+              break;
+            case 2:
+              setPlayerCarPosX(playerCarPosX - 0.1)
+              break;
+            case 3:
+              setPlayerCarPosX(playerCarPosX + 0.1)
+              break;
+          }
+            
         }
       
 
