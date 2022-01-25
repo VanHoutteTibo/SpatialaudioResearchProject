@@ -83,8 +83,6 @@ function Car()
   
   useEffect(() => {
     
-    
-
     //check which key is pressed and set direction active
     const handleKeyDown = (e) => {
       const audioElement = document.querySelector('audio');
@@ -95,9 +93,6 @@ function Car()
       }
       
        
-     
-     
-      
       if(e.code === "KeyW") forward = true;
       else if(e.code === "KeyS") backward = true
 
@@ -126,7 +121,7 @@ function Car()
   }, [])
   
     //updates every frame
-    useFrame(() => {
+    useFrame(({clock}) => {
         //check what directions are activated and move car
         // console.log(panner.pan.value)
         // panner.pan.value =
@@ -158,6 +153,9 @@ function Car()
         localStorage.setItem('playerPosX', movmentX);
         localStorage.setItem('playerPosZ', movmentZ);
        
+        
+        console.log(clock.getElapsedTime())
+        
         
       })
 
