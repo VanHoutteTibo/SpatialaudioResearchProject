@@ -69,13 +69,17 @@ function NpcCar()
 
     useEffect(() => {
       if (soundInitialized < 2) {
+        
         sound.current.setBuffer(buffer)
         sound.current.setRefDistance(2)
         
         sound.current.setLoop(true)
-        sound.current.play()
-        console.log("testNPC")
-        if(soundInitialized == 1) playingSound = sound.current
+        
+        console.log(playingSound)
+        if(soundInitialized == 1) {
+          sound.current.play()
+          playingSound = sound.current
+        }
         soundInitialized++
       }
       
@@ -110,6 +114,14 @@ function NpcCar()
 
         if(e.code === "KeyD") right = false;
         else if(e.code === "KeyA") left = false
+
+        if(e.code === "KeyK")
+        {
+          if (playingSound != undefined) {
+            
+            playingSound.stop()
+          }
+        }
     }
     document.addEventListener('keydown', handleKeyDown)
     document.addEventListener('keyup', handleKeyUp)
@@ -132,15 +144,23 @@ function NpcCar()
         // panner.positionZ = playerCarPosZ
       
 
-        if (localStorage.getItem('reset') == "true"){
+        if (localStorage.getItem('reset') == "true" && movementStarted){
+          setPlayerCarPosX(0)
+          setPlayerCarPosZ(0)
           localStorage.setItem('reset', false)
           direction = Math.floor(Math.random() * 4);
+          console.log("reset")
+          if (playingSound != undefined) {
+            playingSound.stop()
+          }
+         
           soundInitialized = 0
           switch(direction)
           {
             case 0:
               setPlayerCarPosX(0)
               setPlayerCarPosZ(50)
+              
               break;
             case 1:
               setPlayerCarPosX(0)
@@ -155,9 +175,9 @@ function NpcCar()
               setPlayerCarPosZ(50)
               break;
           }
+          
         }
-       
-        if (movementStarted) {
+        else if (movementStarted) {
           switch(direction)
           {
             case 0:

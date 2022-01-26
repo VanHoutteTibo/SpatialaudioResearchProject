@@ -4,9 +4,11 @@ import React, { useRef, useState, useEffect } from 'react'
 
 function UI()
 {
-
+    
+    
 
     const [ gameStarted, setGameStarted ]= useState(false);
+    const [ resetTime, setResetTime ]= useState(0);
     const [uiPos ,setUiPos ]= useState([0,0,0]);
     const [uiPosX ,setUiPosX ]= useState(0);
 
@@ -22,10 +24,24 @@ function UI()
         
     })
 
+   
+
     useFrame(({ clock }) => {
+
+      
         //setUiPosZ(localStorage.getItem('playerPosZ'))
         if (gameStarted) {
             setUiPos([localStorage.getItem('playerPosX'),1,localStorage.getItem('playerPosZ')])
+        }
+        
+       
+        
+        if (localStorage.getItem('reset') == "false") {
+          //console.log(clock.getElapsedTime() - resetTime)
+          if (clock.getElapsedTime() - resetTime > 5) {
+            localStorage.setItem('reset', true)
+            setResetTime(clock.getElapsedTime())
+          }
         }
         
       })
