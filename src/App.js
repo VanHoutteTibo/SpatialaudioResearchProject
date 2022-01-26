@@ -41,7 +41,16 @@ function App() {
         <Suspense fallback={null}>
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
-          <Box position={[-15,3,30]} args={[20,100, 20]}>
+          <Box position={[20,3,30]} args={[20,100, 20]}>
+            <meshStandardMaterial color='grey' />
+          </Box>
+          <Box position={[-20,3,30]} args={[20,100, 20]}>
+            <meshStandardMaterial color='grey' />
+          </Box>
+          <Box position={[20,3,70]} args={[20,100, 20]}>
+            <meshStandardMaterial color='grey' />
+          </Box>
+          <Box position={[-20,3,70]} args={[20,100, 20]}>
             <meshStandardMaterial color='grey' />
           </Box>
           <NpcCar position={[0,0,5]}/>
