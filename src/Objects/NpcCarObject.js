@@ -37,6 +37,7 @@ function NpcCar()
 {
      const [playerCarPosZ, setPlayerCarPosZ] = useState(50)
      const [playerCarPosX, setPlayerCarPosX] = useState(-30)
+     const [npcRotation, setNpcRotation] = useState(0)
 
     
 
@@ -149,6 +150,7 @@ function NpcCar()
           setPlayerCarPosZ(0)
           localStorage.setItem('reset', false)
           direction = Math.floor(Math.random() * 4);
+          localStorage.setItem('dir', direction)
           console.log("reset")
           if (playingSound != undefined) {
             playingSound.stop()
@@ -159,20 +161,23 @@ function NpcCar()
           {
             case 0:
               setPlayerCarPosX(0)
-              setPlayerCarPosZ(50)
-              
+              setPlayerCarPosZ(100)
+              setNpcRotation(deg2rad(180))
               break;
             case 1:
               setPlayerCarPosX(0)
-              setPlayerCarPosZ(-50)
+              setPlayerCarPosZ(-100)
+              setNpcRotation(deg2rad(0))
               break;
             case 2:
-              setPlayerCarPosX(30)
+              setPlayerCarPosX(70)
               setPlayerCarPosZ(50)
+              setNpcRotation(deg2rad(270))
               break;
             case 3:
-              setPlayerCarPosX(-30)
+              setPlayerCarPosX(-70)
               setPlayerCarPosZ(50)
+              setNpcRotation(deg2rad(90))
               break;
           }
           
@@ -207,7 +212,7 @@ function NpcCar()
         <Sound url="/siren.wav" />
         </mesh>
         
-        <Model position={[playerCarPosX,0,playerCarPosZ]} rotation={[0,deg2rad(90),0]}/>
+        <Model position={[playerCarPosX,0,playerCarPosZ]} rotation={[0,npcRotation,0]}/>
         
       </>
     )
