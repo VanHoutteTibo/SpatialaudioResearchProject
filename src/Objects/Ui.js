@@ -1,6 +1,6 @@
 import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import React, { useRef, useState, useEffect } from 'react'
+import React, {  useState } from 'react'
 
 function UI()
 {
@@ -13,13 +13,15 @@ function UI()
     const [ reset, setReset ]= useState(false);
     const [uiPos ,setUiPos ]= useState([0,0,0]);
     const [ score, setScore ] = useState(0)
-    const [uiPosX ,setUiPosX ]= useState(0);
+    const [ rightAnswer, setRightAnswer ] = useState(true);
+    //const [uiPosX ,setUiPosX ]= useState(0);
 
-    const deg2rad = degrees => degrees * (Math.PI / 180);
+    //const deg2rad = degrees => degrees * (Math.PI / 180);
 
     const correctAnswer = () => {
       setScore(Math.round(score + (100 * timeDiff)))
       localStorage.setItem('reset', true)
+      setRightAnswer(true)
       setReset(true)
     }
     
@@ -32,7 +34,11 @@ function UI()
       else if (dirAnswer == "back" && dir == 1) correctAnswer()
       else if (dirAnswer == "left" && dir == 2) correctAnswer()
       else if (dirAnswer == "right" && dir == 3) correctAnswer()
-      else setScore(Math.round(score - 100))
+      else 
+      {
+        setRightAnswer(false)
+        setScore(Math.round(score - 100))
+      }
 
       console.log(score)
     }
@@ -43,7 +49,18 @@ function UI()
         
     })
 
-   
+   function ScoreHMTL() 
+   {
+     if (rightAnswer) {
+       return (
+        <div  className='text-center text-green-500'>score: {score}</div>
+       )
+     } else{
+      return (
+      <div  className='text-center text-red-500'>score: {score}</div>
+      )
+     }
+   }
 
     useFrame(({ clock }) => {
 
@@ -53,13 +70,13 @@ function UI()
             setUiPos([localStorage.getItem('playerPosX'),1,localStorage.getItem('playerPosZ')])
         }
         
-       if (reset == true)
+       if (reset === true)
        {
         setResetTime(clock.getElapsedTime())
         setReset(false)
        }
         
-        if (localStorage.getItem('reset') == "false") {
+        if (localStorage.getItem('reset') === "false") {
           setTimeDiff(clock.getElapsedTime() - resetTime)
           if (clock.getElapsedTime() - resetTime > 15) {
             localStorage.setItem('reset', true)
@@ -83,7 +100,7 @@ function UI()
 
         {gameStarted === true &&
           <div className='relative mt-0 -translate-x-28 -translate-y-56 w-60 h-26 bg-gray-100 rounded-md'>
-            <div  className='text-center'>score: {score}</div>
+            <ScoreHMTL/>
             <div className='flex justify-between '>
               <button index="front" className='text-center w-1/2 hover:bg-slate-200 active:bg-slate-300 py-2 rounded-md' onClick={answer}>Front</button>
               <button index='back' className='text-center w-1/2 hover:bg-slate-200 active:bg-slate-300 py-2 rounded-md' onClick={answer}>Back</button>

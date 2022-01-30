@@ -1,10 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react'
 import Model from '../Models/NpcCar.js';
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
+import {  useFrame, useLoader, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
-import { Mesh } from 'three';
-import { once } from 'events';
-import { Box, PositionalAudio } from '@react-three/drei';
+
+
 
 //variable to keep track of witch directions are activated
 let forward, backward, left, right = false
@@ -84,11 +83,20 @@ function NpcCar()
         soundInitialized++
       }
       
-      //console.log(1/Math.pow(calcDistance()/100,2))
-      if(soundInitialized > 1)playingSound.setVolume(1/Math.pow(calcDistance()/100,2))
+     
+      if(soundInitialized > 1)
+      {
+        let vol = 1/Math.pow(calcDistance()/100,2)
+        if (vol >= 10) {
+          playingSound.setVolume(10)
+        } else{
+          playingSound.setVolume(1/Math.pow(calcDistance()/100,2))
+        }
+       
+      }
       
-      listener.position.x = playerCarPosX
-      listener.position.z = playerCarPosZ
+      //listener.position.x = playerCarPosX
+      //listener.position.z = playerCarPosZ
       
       camera.add(listener)
       
@@ -170,12 +178,12 @@ function NpcCar()
               setNpcRotation(deg2rad(0))
               break;
             case 2:
-              setPlayerCarPosX(70)
+              setPlayerCarPosX(100)
               setPlayerCarPosZ(50)
               setNpcRotation(deg2rad(270))
               break;
             case 3:
-              setPlayerCarPosX(-70)
+              setPlayerCarPosX(-100)
               setPlayerCarPosZ(50)
               setNpcRotation(deg2rad(90))
               break;
