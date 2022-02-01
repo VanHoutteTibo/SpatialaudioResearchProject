@@ -14,7 +14,7 @@ function UI()
 
     //change score on right answer and reset
     const correctAnswer = () => {
-      setScore(Math.round(score + (100 * timeDiff)))
+      setScore(Math.round(score + (100 / timeDiff)))
       localStorage.setItem('reset', true)
       setRightAnswer(true)
       setReset(true)
@@ -33,7 +33,7 @@ function UI()
       else 
       {
         setRightAnswer(false)
-        setScore(Math.round(score - 100))
+        setScore(Math.round(score - 50))
       }
     }
     
@@ -84,7 +84,7 @@ function UI()
         {gameStarted === false &&
           <div className='relative mt-0 -translate-x-28 -translate-y-56 w-60 h-26 bg-gray-100 rounded-md'>
             <p className='text-2xs p-2 text-center font-medium'>Welcome to the research project of Tibo Van Houtte.</p>
-            <p className='text-2xs p-2 text-center'>Use the ZQSD keys to move the car.</p>
+            <p className='text-2xs p-2 text-center'>Use the Arrow keys to move the car.</p>
             <p className='text-2xs p-2 text-center'>Listen to the sound of the incoming ambulance and try to guess which direction it's coming from.</p>
             <p className='text-2xs p-2 font-bold text-center'>Press any button to start the game.</p>
           </div>

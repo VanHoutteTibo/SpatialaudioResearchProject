@@ -37,18 +37,18 @@ function Car()
     
     //check which key is pressed and set direction active
     const handleKeyDown = (e) => { 
-      if(e.code === "KeyZ") forward = true;
-      else if(e.code === "KeyS") backward = true
+      if(e.code === "ArrowUp") forward = true;
+      else if(e.code === "ArrowDown") backward = true
 
-      if(e.code === "KeyD") right = true;
-      else if(e.code === "KeyQ") left = true
+      if(e.code === "ArrowRight") right = true;
+      else if(e.code === "ArrowLeft") left = true
     }
     const handleKeyUp = (e) => {
-        if(e.code === "KeyZ") forward = false;
-        else if(e.code === "KeyS") backward = false
+        if(e.code === "ArrowUp") forward = false;
+        else if(e.code === "ArrowDown") backward = false
 
-        if(e.code === "KeyD") right = false;
-        else if(e.code === "KeyQ") left = false
+        if(e.code === "ArrowRight") right = false;
+        else if(e.code === "ArrowLeft") left = false
 
         
     }
