@@ -17,8 +17,6 @@ import GreyBuilding from './Objects/GreyBuilding';
 
 
 function App() {
-
-  const name = (type) => `${type}.jpg`;
   
   const deg2rad = degrees => degrees * (Math.PI / 180);
 

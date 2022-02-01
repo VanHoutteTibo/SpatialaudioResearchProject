@@ -4,9 +4,6 @@ import React, {  useState } from 'react'
 
 function UI()
 {
-    
-    
-
     const [ gameStarted, setGameStarted ]= useState(false);
     const [ resetTime, setResetTime ]= useState(0);
     const [ timeDiff, setTimeDiff ]= useState(0);
@@ -14,10 +11,8 @@ function UI()
     const [uiPos ,setUiPos ]= useState([0,0,0]);
     const [ score, setScore ] = useState(0)
     const [ rightAnswer, setRightAnswer ] = useState(true);
-    //const [uiPosX ,setUiPosX ]= useState(0);
 
-    //const deg2rad = degrees => degrees * (Math.PI / 180);
-
+    //change score on right answer and reset
     const correctAnswer = () => {
       setScore(Math.round(score + (100 * timeDiff)))
       localStorage.setItem('reset', true)
@@ -26,7 +21,8 @@ function UI()
     }
     
 
-     const answer = (event) => {    
+    //check if answer is correct
+    const answer = (event) => {    
       let dirAnswer = event.target.getAttribute('index')
       let dir = localStorage.getItem('dir')
 
@@ -39,16 +35,15 @@ function UI()
         setRightAnswer(false)
         setScore(Math.round(score - 100))
       }
-
-      console.log(score)
     }
     
-
+    //start game when key is pressed
     document.addEventListener('keydown', () => {
         setGameStarted(true)
         
     })
 
+   //change color of score on correct or wrong answer
    function ScoreHMTL() 
    {
      if (rightAnswer) {
@@ -64,8 +59,6 @@ function UI()
 
     useFrame(({ clock }) => {
 
-      
-        //setUiPosZ(localStorage.getItem('playerPosZ'))
         if (gameStarted) {
             setUiPos([localStorage.getItem('playerPosX'),1,localStorage.getItem('playerPosZ')])
         }
@@ -90,7 +83,6 @@ function UI()
         <Html distanceFactor={20} position={uiPos}>
         {gameStarted === false &&
           <div className='relative mt-0 -translate-x-28 -translate-y-56 w-60 h-26 bg-gray-100 rounded-md'>
-            {/* <button className='' onClick={answer}>Yo</button> */}
             <p className='text-2xs p-2 text-center font-medium'>Welcome to the research project of Tibo Van Houtte.</p>
             <p className='text-2xs p-2 text-center'>Use the ZQSD keys to move the car.</p>
             <p className='text-2xs p-2 text-center'>Listen to the sound of the incoming ambulance and try to guess which direction it's coming from.</p>

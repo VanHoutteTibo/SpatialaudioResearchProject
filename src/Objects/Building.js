@@ -6,7 +6,6 @@ import { TextureLoader } from 'three';
 function Building(pos)
 {
     const colorMap = useLoader(TextureLoader, 'glass.jpg')
-    //colorMap.repeat.set(1,1)
 
     return (
         <Box position={[pos.x,pos.y,pos.z]} args={[20,100, 20]}>
