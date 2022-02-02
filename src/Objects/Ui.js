@@ -60,7 +60,7 @@ function UI()
     useFrame(({ clock }) => {
 
         if (gameStarted) {
-            setUiPos([localStorage.getItem('playerPosX'),1,localStorage.getItem('playerPosZ')])
+            setUiPos([localStorage.getItem('playerPosX'),-4,localStorage.getItem('playerPosZ')])
         }
         
        if (reset === true)
